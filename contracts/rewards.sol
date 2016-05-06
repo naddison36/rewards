@@ -40,6 +40,7 @@ contract Rewards
         }
     }
     
+    // creates a new punishment and reduces the rewards of the worker that is being punished
     function addPunishment(address worker, string description, uint rewards) returns (Punishment punishment, uint newRewards)
     {
         punishment = new Punishment(punishments.length + 1, worker, description, rewards);
@@ -79,7 +80,6 @@ contract Rewards
         }
     }
     
-    
     function startJob(uint id) returns (bool success, string error, Job job)
     {
         // if job id is out of range of the listed jobs
@@ -97,5 +97,31 @@ contract Rewards
     function endJob(uint id) {}
     function rejectJob(uint id) {}
     
+    event Transfer(address from, address to, uint rewards);
+    
+    // transfers rewards between workers
+    function transfer(address from, address to, uint rewards) returns (bool success, string error)
+    {
+        // if from address does not exist
+        if (balances[from] == 0)
+        {
+            return (false, "from address doesn't have any rewards");
+        }
+        else if (balances[from] < rewards)
+        {
+            return (false, "not enough rewards to transfer");
+        }
+        else if (rewards <= 0)
+        {
+            return (false, "can not transfer a negative amount");
+        }
+        
+        balances[to] += rewards;
+        balances[from] -= rewards;
+        
+        Transfer(from, to, rewards);
+    }
+    
+    // return Ether if someone sends Ether to this contract
     function() { throw; }
 }

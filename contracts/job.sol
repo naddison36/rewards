@@ -21,6 +21,7 @@ contract Job
         description = _description;
         proposedRewards = _proposedReqards;
         
+        // TODO is this sender or origin?
         superviser = msg.sender;
         state = State.Proposed;
     }
@@ -99,5 +100,6 @@ contract Job
         success = true;
     }
     
+    // return Ether if someone sends Ether to this contract
     function() { throw; }
 }

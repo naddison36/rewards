@@ -18,4 +18,7 @@ contract Punishment
         superviser = msg.sender;
         worker = _worker;
     }
+    
+    // return Ether if someone sends Ether to this contract
+    function() { throw; }
 }
