@@ -1,5 +1,5 @@
-import "job.sol";
-import "punishment.sol";
+import "Job.sol";
+import "Punishment.sol";
 
 contract Rewards
 {   

@@ -1,2 +1,4 @@
-# kidsRewards
-Ethereum smart contracts for rewarding kids doing job
+# Rewards
+Ethereum smart contracts for rewarding workers
+
+
