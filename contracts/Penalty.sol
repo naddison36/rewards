@@ -1,4 +1,4 @@
-contract Punishment
+contract Penalty
 {
     // unique identifier for this job
     uint id;
@@ -9,7 +9,7 @@ contract Punishment
     string public description;
     uint rewards;
     
-    function Punishment(uint _id, address _worker, string _description, uint _rewards)
+    function Penalty(uint _id, address _worker, string _description, uint _rewards)
     {
         id = _id;
         description = _description;

@@ -41,10 +41,8 @@ contract Job
         }
         
         state = State.Working;
-        //success = true;
         
         return (true, "success");
-        //return ("success", "2");
     }
     
     function end() returns (bool success, string error)
@@ -102,4 +100,13 @@ contract Job
     
     // return Ether if someone sends Ether to this contract
     function() { throw; }
+    
+    function kill()
+    { 
+        if (msg.sender == superviser)
+        {
+            // kills this contract and sends remaining funds back to creator
+            suicide(superviser);  
+        }   
+    }
 }

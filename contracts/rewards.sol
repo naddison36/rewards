@@ -1,5 +1,5 @@
 import "Job.sol";
-import "Punishment.sol";
+import "Penalty.sol";
 
 contract Rewards
 {   
@@ -7,7 +7,7 @@ contract Rewards
     
     // list of jobs
     Job[] jobs;
-    Punishment[] punishments;
+    Penalty[] penalties;
     
     function proposeJob(string description, uint proposedReqards) returns (Job job)
     {
@@ -25,9 +25,7 @@ contract Rewards
         uint numProposedJobs = 0;
         for (uint i = 0; i < jobs.length; i++)
         {
-            // TODO fix the compare of enum
-            //if (jobs[i].state == Job.State.Proposed) {count++;}
-            numProposedJobs++;
+            if (jobs[i].state() == Job.State.Proposed) { numProposedJobs++; }
         }
         
         // allocate a static array in memory for the number of proposedJobs 
@@ -40,11 +38,11 @@ contract Rewards
         }
     }
     
-    // creates a new punishment and reduces the rewards of the worker that is being punished
-    function addPunishment(address worker, string description, uint rewards) returns (Punishment punishment, uint newRewards)
+    // creates a new penalty and reduces the rewards of the worker that is being penalised
+    function addPenalty(address worker, string description, uint rewards) returns (Penalty penalty, uint newRewards)
     {
-        punishment = new Punishment(punishments.length + 1, worker, description, rewards);
-        punishments.push(punishment);
+        penalty = new Penalty(penalties.length + 1, worker, description, rewards);
+        penalties.push(penalty);
         
         newRewards = balances[worker] - rewards;
         
@@ -92,8 +90,9 @@ contract Rewards
         
         job = jobs[id];
         // TODO See ping.sol and pong.sol for example of Get return value from non-constant function from another contract
-        //(success,  error) = job.start();
+        //(success, error) = job.start();
     }
+    
     function endJob(uint id) {}
     function rejectJob(uint id) {}
     
